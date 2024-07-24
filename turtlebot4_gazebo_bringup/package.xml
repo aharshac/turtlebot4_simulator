@@ -2,9 +2,9 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>turtlebot4_gazebo_bringup</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="aharsha@gmail.com">harsha</maintainer>
+  <version>0.0.1</version>
+  <description>TurtleBot 4 Gazebo Classic Simulator bringup</description>
+  <maintainer email="">haralva</maintainer>
   <license>Apache 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -30,6 +30,9 @@
   <!-- <depend>ros_ign_interfaces</depend>
   <depend>ros_ign_gazebo</depend>
   <depend>ros_ign_bridge</depend> -->
+
+  <!-- ROS gazebo -->
+  <depend>gazebo_ros</depend>
 
   <!-- Messages -->
   <depend>std_msgs</depend>

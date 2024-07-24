@@ -12,7 +12,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY config gui launch
+  DIRECTORY config gui launch worlds
   DESTINATION share/${PROJECT_NAME}
 )
 
