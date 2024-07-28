@@ -44,12 +44,15 @@ ARGUMENTS = [
     DeclareLaunchArgument('localization', default_value='false',
                           choices=['true', 'false'],
                           description='Whether to launch localization'),
-    DeclareLaunchArgument('slam', default_value='false',
+    DeclareLaunchArgument('slam', default_value='true',
                           choices=['true', 'false'],
                           description='Whether to launch SLAM'),
-    DeclareLaunchArgument('nav2', default_value='false',
+    DeclareLaunchArgument('nav2', default_value='true',
                           choices=['true', 'false'],
                           description='Whether to launch Nav2'),
+    DeclareLaunchArgument('explore', default_value='true',
+                          choices=['true', 'false'],
+                          description='Whether to explore'),
 ]
 
 for pose_element in ['x', 'y', 'z', 'yaw']:
@@ -72,6 +75,8 @@ def generate_launch_description():
         'irobot_create_common_bringup')
     pkg_irobot_create_ignition_bringup = get_package_share_directory(
         'irobot_create_ignition_bringup')
+    pkg_explore_lite = get_package_share_directory(
+        'explore_lite')
 
     # Paths
     turtlebot4_ros_ign_bridge_launch = PathJoinSubstitution(
@@ -94,6 +99,8 @@ def generate_launch_description():
         [pkg_turtlebot4_navigation, 'launch', 'slam.launch.py'])
     nav2_launch = PathJoinSubstitution(
         [pkg_turtlebot4_navigation, 'launch', 'nav2.launch.py'])
+    explore_launch = PathJoinSubstitution(
+        [pkg_explore_lite, 'launch', 'explore.launch.py'])
 
     # Parameters
     param_file_cmd = DeclareLaunchArgument(
@@ -266,6 +273,16 @@ def generate_launch_description():
         condition=IfCondition(LaunchConfiguration('nav2'))
     )
 
+    # explore
+    explore = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([explore_launch]),
+        launch_arguments=[
+            ('namespace', namespace),
+            ('use_sim_time', use_sim_time)
+        ],
+        condition=IfCondition(LaunchConfiguration('explore'))
+    )
+
     # RViz
     rviz = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([rviz_launch]),
@@ -279,8 +296,9 @@ def generate_launch_description():
     ld = LaunchDescription(ARGUMENTS)
     ld.add_action(param_file_cmd)
     ld.add_action(spawn_robot_group_action)
-    #ld.add_action(localization)
-    #ld.add_action(slam)
-    #ld.add_action(nav2)
-    #ld.add_action(rviz)
+    ld.add_action(localization)
+    ld.add_action(slam)
+    ld.add_action(nav2)
+    ld.add_action(explore)
+    ld.add_action(rviz)
     return ld

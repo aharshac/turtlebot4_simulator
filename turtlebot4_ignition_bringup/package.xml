@@ -36,6 +36,8 @@
   <depend>geometry_msgs</depend>
   <depend>irobot_create_msgs</depend>
 
+  <depend>explore_lite</depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
